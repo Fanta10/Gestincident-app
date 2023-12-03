@@ -1,7 +1,7 @@
 package ci.gs2e.Gestion_Incidents.Controller;
 
 //import ci.gs2e.Gestion_Incidents.Modele.Logiciel;
-import ci.gs2e.Gestion_Incidents.Modele.Environnement;
+import ci.gs2e.Gestion_Incidents.Modele.*;
 import ci.gs2e.Gestion_Incidents.Repository.EnvironnementRepository;
 import ci.gs2e.Gestion_Incidents.Service.Environnement.EnvironnementService;
 //import lombok.AllArgsConstructor;
@@ -27,6 +27,16 @@ public class EnvironnementController {
 
     @Autowired
     EnvironnementRepository environnementRepository;
+
+
+
+    @GetMapping("/page/{pageNumber}/{pageSize}")
+    public ResponseEntity<Page<Environnement>> getRex(@PathVariable Integer pageNumber, @PathVariable Integer pageSize, EnvironnementPage environnementPage, EnvironnementSearchCriteria environnementSearchCriteria){
+        environnementPage.setPageNumber(pageNumber);
+        environnementPage.setPageSize(pageSize);
+        return new ResponseEntity<>(environnementService.getRex(environnementPage,environnementSearchCriteria),
+                HttpStatus.OK);
+    }
 
     @GetMapping
    //@PreAuthorize("hasAuthority('ROLE_USER')")
@@ -83,19 +93,21 @@ public class EnvironnementController {
     }
 
  */
-/*
+
     @GetMapping("/env/{pageNumber}/{pageSize}")
     public List < Environnement > getEnv(@PathVariable Integer pageNumber, @PathVariable Integer pageSize) {
         Page < Environnement > data = environnementService.getEnvironnementPagination(pageNumber, pageSize, null);
         return data.getContent();
     }
+
+
     @GetMapping("/env/{pageNumber}/{pageSize}/{sort}")
     public List < Environnement > getEnv(@PathVariable Integer pageNumber, @PathVariable Integer pageSize, @PathVariable String sort) {
         Page < Environnement > data = environnementService.getEnvironnementPagination(pageNumber, pageSize, sort);
         return data.getContent();
     }
 
- */
+
 
     @GetMapping("/recherche")
     public  ResponseEntity<Optional<Environnement>> search(@RequestParam(name = "keyword") String libelleEnv){

@@ -12,4 +12,5 @@ public interface IncidentService {
     public List<Incident> listAll();
     public Optional<Incident> findOne(int idInc);
     public Incident listByLibelle(Incident incident);
+    String LoadFile(int lib, int idenv, int idapp);
 }

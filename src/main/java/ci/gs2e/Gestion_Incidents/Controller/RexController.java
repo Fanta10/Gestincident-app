@@ -25,13 +25,15 @@ public class RexController {
     @Autowired
    private RexService rexService;
 //@PreAuthorize("hasAuthority('SCOPE8uSER')")
-    /* @GetMapping
-    public ResponseEntity<Page<Rex>> getRex(RexPage rexPage, RexSearchCriteria rexSearchCriteria){
+     @GetMapping("/page/{pageNumber}/{pageSize}")
+    public ResponseEntity<Page<Rex>> getRex(@PathVariable Integer pageNumber, @PathVariable Integer pageSize, RexPage rexPage, RexSearchCriteria rexSearchCriteria){
+        rexPage.setPageNumber(pageNumber);
+        rexPage.setPageSize(pageSize);
         return new ResponseEntity<>(rexService.getRex(rexPage,rexSearchCriteria),
                     HttpStatus.OK);
     }
 
-     */
+
 
 
 

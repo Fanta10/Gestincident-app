@@ -9,6 +9,7 @@ import lombok.*;
 @Data
 @Setter
 @Getter
+@Builder
 @Table(name = "rex")
 public class Rex {
     @Id
@@ -25,6 +26,14 @@ public class Rex {
    // public void setIdRex(Long idRex) {
      //   this.idRex = idRex;
    // }
+
+
+
+
+    public Rex(int idRex) {
+        this.idRex = idRex;
+    }
+
 
 
     public int getIdRex() {

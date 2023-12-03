@@ -3,10 +3,13 @@ package ci.gs2e.Gestion_Incidents.Controller;
 
 import ci.gs2e.Gestion_Incidents.Dto.AuthenticationDTO;
 import ci.gs2e.Gestion_Incidents.Dto.AuthenticationResponse;
+import ci.gs2e.Gestion_Incidents.Dto.UserDTO;
+import ci.gs2e.Gestion_Incidents.Modele.User;
 import ci.gs2e.Gestion_Incidents.Service.Jwt.UserDetailsServiceImpl;
 import ci.gs2e.Gestion_Incidents.Util.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -32,14 +35,17 @@ public class AuthenticationController {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+
+
     @PostMapping("/authenticate")
     public AuthenticationResponse createAuthenticationToken(@RequestBody AuthenticationDTO authenticationDTO, HttpServletResponse response) throws BadCredentialsException, DisabledException, UsernameNotFoundException, IOException {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationDTO.getEmail(), authenticationDTO.getPassword()));
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("Incorrect username or password!");
+           throw new BadCredentialsException("Incorrect username or password!");
+
         } catch (DisabledException disabledException) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "User is not activated");
+           response.sendError(HttpServletResponse.SC_NOT_FOUND, "User is not activated");
             return null;
         }
 
@@ -50,4 +56,8 @@ public class AuthenticationController {
         return new AuthenticationResponse(jwt);
 
     }
+
+
+
+
 }

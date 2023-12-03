@@ -3,13 +3,16 @@ package ci.gs2e.Gestion_Incidents.Service.Incident;
 import ci.gs2e.Gestion_Incidents.Modele.Incident;
 import ci.gs2e.Gestion_Incidents.Repository.IncidentRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-@AllArgsConstructor
+
 @Service
 public class IncidentServiceImpl implements IncidentService{
+
+    @Autowired
     IncidentRepository incidentRepository;
     @Override
     public Incident create(Incident incident) {
@@ -49,5 +52,10 @@ public class IncidentServiceImpl implements IncidentService{
     @Override
     public Incident listByLibelle(Incident incident) {
         return null;
+    }
+
+    @Override
+    public String LoadFile(int lib, int idenv, int idapp) {
+        return incidentRepository.LoadFile(lib,idenv,idapp);
     }
 }

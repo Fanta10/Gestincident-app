@@ -1,8 +1,11 @@
 package ci.gs2e.Gestion_Incidents.Service.Environnement;
 
-import ci.gs2e.Gestion_Incidents.Modele.Environnement;
+import ci.gs2e.Gestion_Incidents.Modele.*;
+import ci.gs2e.Gestion_Incidents.Repository.EnvironnementCriteriaRepository;
 import ci.gs2e.Gestion_Incidents.Repository.EnvironnementRepository;
+import ci.gs2e.Gestion_Incidents.Repository.RexCriteriaRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +20,10 @@ import java.util.stream.Collectors;
 @Service
 public class EnvironnementServiceImpl implements EnvironnementService{
     EnvironnementRepository environnementRepository;
+
+    @Autowired
+    private EnvironnementCriteriaRepository environnementCriteriaRepository;
+
     @Override
     public Environnement create(Environnement environnement)
     {
@@ -64,6 +71,15 @@ public class EnvironnementServiceImpl implements EnvironnementService{
 
         return environnementRepository.findByLibelleEnvContains(libelleEnv);
     }
+
+    @Override
+    public Page<Environnement> getRex(EnvironnementPage environnementPage, EnvironnementSearchCriteria environnementSearchCriteria) {
+        return environnementCriteriaRepository.findAllFilters(environnementPage, environnementSearchCriteria);
+    }
+
+
+
+
 
 
 

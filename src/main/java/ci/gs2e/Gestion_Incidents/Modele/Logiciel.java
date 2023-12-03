@@ -24,6 +24,8 @@ public class Logiciel {
     @JoinColumn(name = "idRex")
    private Rex rex;
 
+
+
     public void setIdApp(int idApp) {
         this.idApp = idApp;
     }

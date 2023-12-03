@@ -7,6 +7,9 @@ import ci.gs2e.Gestion_Incidents.Modele.Pload.IncidentPayload;
 import ci.gs2e.Gestion_Incidents.Service.Incident.IncidentService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,23 +18,35 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@AllArgsConstructor
 @RequestMapping("/v1/incident")
 
 public class IncidentController {
+    @Value("${server.address}")
+    String server;
 
-    @Autowired
-   IncidentService incidentService;
+    @Value("${server.port}")
+    int port;
+
+
+  private IncidentService incidentService;
 
     private final Path root = Paths.get("Document");
+@Autowired
+    public IncidentController(IncidentService incidentService){
+        this.incidentService = incidentService;
+
+    }
 
     @GetMapping
     public ResponseEntity<List<Incident>> getAll(){
@@ -91,6 +106,18 @@ public class IncidentController {
         }
         return filepath;
     }
+
+@GetMapping("/load/{libelle}/{idenv}/{idapp}")
+public ResponseEntity<Object> loadFile(@PathVariable("libelle") int libelle, @PathVariable("idenv")int idenv, @PathVariable("idapp")int idapp){
+
+        String filename = incidentService.LoadFile(libelle,idenv,idapp);
+    Map<String, String> doc = new HashMap<>();
+    doc.put("url_doc","http://"+ server+ ":" + port +"/Document/"+ filename);
+    return ResponseEntity.ok().body(doc);
+
+}
+
+
 }
 
 

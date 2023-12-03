@@ -1,6 +1,6 @@
 package ci.gs2e.Gestion_Incidents.Service.Environnement;
 
-import ci.gs2e.Gestion_Incidents.Modele.Environnement;
+import ci.gs2e.Gestion_Incidents.Modele.*;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -14,6 +14,7 @@ public interface EnvironnementService {
     Page<Environnement> getEnvironnementPagination(Integer pageNumber, Integer pageSize, String sort);
     public Optional<Environnement> listByLibelle(String libelleEnv);
     //Environnement getAccountHistory(int idEnv,int page, int size) throws Exception;
+    public Page<Environnement> getRex(EnvironnementPage environnementPage, EnvironnementSearchCriteria environnementSearchCriteria);
 
 
 

@@ -28,9 +28,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests()
-                    .requestMatchers("/authenticate", "/sign-up").permitAll()
+                    .requestMatchers("/authenticate", "/sign-up","/**").permitAll()
                 .and()
-                .authorizeHttpRequests().requestMatchers("/v1/**")
+                .authorizeHttpRequests().requestMatchers("/v1/**","D:\\Gestion_Incidents\\Document","/Document/**")
                 .authenticated().and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
